@@ -1,0 +1,16 @@
+﻿#include "${CLASS_NAME}.h"
+
+U${CLASS_NAME}::U${CLASS_NAME}()
+{
+    PrimaryActorTick.bCanEverTick = true;
+}
+
+void U${CLASS_NAME}::BeginPlay()
+{
+    Super::BeginPlay();
+}
+
+void U${CLASS_NAME}::Tick(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+    Super::Tick(DeltaTime);
+}

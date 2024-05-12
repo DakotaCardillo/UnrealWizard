@@ -1,0 +1,21 @@
+﻿#pragma once
+
+#include "CoreMinimal.h"
+#include "Modules/ModuleInterface.h"
+
+class F${CLASS_NAME} : public IModuleInterface
+{
+public:
+	static inline F${CLASS_NAME} Get()
+	{
+		return FModuleManager::LoadModuleChecked<F${CLASS_NAME}>("${CLASS_NAME}");
+	}
+
+	static inline bool IsAvailable()
+	{
+		return FModuleManager::Get().IsModuleLoaded("${CLASS_NAME}");
+	}
+
+	virtual void StartupModule() override;
+	virtual void ShutdownModule() override;
+};

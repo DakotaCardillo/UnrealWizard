@@ -1,0 +1,13 @@
+﻿
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Subsystems/WorldSubsystem.h"
+#include "${CLASS_NAME}.generated.h"
+
+UCLASS()
+class ${API_NAME} U${CLASS_NAME} : public UWorldSubsystem
+{
+	GENERATED_BODY()
+	
+};

@@ -1,0 +1,22 @@
+﻿#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+
+#include "${CLASS_NAME}.generated.h"
+
+UCLASS()
+class ${API_NAME} A${CLASS_NAME} : public AActor
+{
+    GENERATED_BODY()
+
+public:
+    A${CLASS_NAME}();
+
+protected:
+    virtual void BeginPlay() override;
+
+public:
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+};

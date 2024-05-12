@@ -1,0 +1,17 @@
+﻿#pragma once
+
+#include "${CLASS_NAME}.generated.h"
+
+UINTERFACE(Blueprintable)
+class ${API_NAME} U${CLASS_NAME} : public UInterface
+{
+    GENERATED_BODY()
+};
+
+class I${CLASS_NAME}
+{
+    GENERATED_BODY()
+
+public:
+    
+};

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
+
+  <Commands package="UnrealWizard">
+    <Bitmaps>
+      <Bitmap guid="AbstractCube" href="Resources\Icons\AbstractCube.png" usedList="AbstractCubeIcon"/>
+      <Bitmap guid="AddFolder" href="Resources\Icons\AddFolder.png" usedList="AddFolderIcon"/>
+      <Bitmap guid="AddMethod" href="Resources\Icons\AddMethod.png" usedList="AddMethodIcon"/>
+      <Bitmap guid="AddToSolutionExplorer" href="Resources\Icons\AddToSolutionExplorer.png" usedList="AddToSolutionExplorerIcon"/>
+    </Bitmaps>
+    <Groups>
+      <Group guid="UnrealWizard" id="UnrealWizardGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_FOLDERNODE"/>
+      </Group>
+    </Groups>
+    
+    <!--<Menus>
+      <Menu guid="guidUEClassWindowCommandPackageCmdSet" id="Unreal Wizard" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+        <Strings>
+          <ButtonText>Create UE C++ Class</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>-->
+    <Buttons>
+      <Button guid="UnrealWizard" id="UEClassWindow" priority="0x0100" type="Button">
+        <Parent guid="UnrealWizard" id="UnrealWizardGroup"/>
+        <Icon guid="AddMethod" id="AddMethodIcon" />
+        <Strings>
+          <ButtonText>Create UE C++ Class</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="UnrealWizard" id="CreateSyncedFilter" priority="0x0010" type="Button">
+        <Parent guid="UnrealWizard" id="UnrealWizardGroup"/>
+        <Icon guid="AddToSolutionExplorer" id="AddToSolutionExplorerIcon" />
+        <Strings>
+          <ButtonText>Create synced filter</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="UnrealWizard" value="{252cf685-cded-4bd7-8d49-5fd125157a3b}">
+      <IDSymbol name="UnrealWizardGroup" value="0x0001"/>
+      <IDSymbol name="UEClassWindow" value="0x0100"/>
+      <IDSymbol name="CreateSyncedFilter" value="0x0010"/>
+      <!-- Package GUID -->
+    </GuidSymbol>
+    <GuidSymbol name="AbstractCube" value="{34D43ECA-C84F-4EE2-9398-A842A94A1EA6}">
+      <IDSymbol name="AbstractCubeIcon" value="1"/>
+    </GuidSymbol>
+    <GuidSymbol name="AddFolder" value="{F678F4AF-E06B-4E42-9747-88F23A22E77A}">
+      <IDSymbol name="AddFolderIcon" value="1"/>
+    </GuidSymbol>
+    <GuidSymbol name="AddMethod" value="{11DF06ED-B9B2-4C50-90FD-5A1040D46F53}">
+      <IDSymbol name="AddMethodIcon" value="1"/>
+    </GuidSymbol>
+    <GuidSymbol name="AddToSolutionExplorer" value="{F4635519-3B76-48D8-AA3B-4F83DCB189B2}">
+      <IDSymbol name="AddToSolutionExplorerIcon" value="1"/>
+    </GuidSymbol>
+    <!--<GuidSymbol name="guidUnrealWizardCmdSet" value="{252cf685-cded-4bd7-8d49-5fd125157a3b}">
+      --><!-- Command set GUID --><!--
+      <IDSymbol name="cmdidUEClassWindow" value="0x0100" />
+    </GuidSymbol>-->
+  </Symbols>
+</CommandTable>

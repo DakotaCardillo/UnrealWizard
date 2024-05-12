@@ -1,0 +1,709 @@
+﻿<UserControl x:Class="UnrealWizard.UEClassWindowControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:UnrealWizard"
+        mc:Ignorable="d"
+        d:DesignHeight="600" d:DesignWidth="1000">
+   <Grid>
+      <Grid.Resources>
+
+         <SolidColorBrush x:Key="FontBrush" Color="#DDDDDD"/>
+         <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#FF424242"/>
+            <GradientStop Offset="1" Color="#FF1D1D1D"/>
+         </LinearGradientBrush>
+         <SolidColorBrush x:Key="BorderBrush1" Color="#FF191919"/>
+         <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#FF6B6B6B"/>
+            <GradientStop Offset="1" Color="#FF4E4E4E"/>
+         </LinearGradientBrush>
+
+         <!-- Left Button Template -->
+         <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="1,1,0,1"
+                CornerRadius="2,0,0,2">
+               <ContentPresenter
+                    HorizontalAlignment="Center"
+                    Margin="{TemplateBinding Padding}"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Normal"
+                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+               <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                  <Setter TargetName="Border" Property="Background" Value="#808080"/>
+               </Trigger>
+               <Trigger Property="IsChecked" Value="true">
+                  <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}"/>
+               </Trigger>
+            </ControlTemplate.Triggers>
+         </ControlTemplate>
+
+         <!-- Middle Button(s) Template -->
+         <ControlTemplate x:Key="ToggleButtonMid" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="1,1,0,1"
+                CornerRadius="0" >
+               <ContentPresenter
+                    HorizontalAlignment="Center"
+                    Margin="{TemplateBinding Padding}"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Normal"
+                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+               <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                  <Setter TargetName="Border" Property="Background" Value="#808080"/>
+               </Trigger>
+               <Trigger Property="IsChecked" Value="true">
+                  <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}"/>
+               </Trigger>
+            </ControlTemplate.Triggers>
+         </ControlTemplate>
+
+         <!-- Right Button Template -->
+         <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="1,1,1,1"
+                CornerRadius="0, 2, 2, 0" >
+               <ContentPresenter
+                    HorizontalAlignment="Center"
+                    Margin="{TemplateBinding Padding}"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Normal"
+                    TextBlock.Foreground="{StaticResource FontBrush}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+               <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                  <Setter TargetName="Border" Property="Background" Value="#808080"/>
+               </Trigger>
+               <Trigger Property="IsChecked" Value="true">
+                  <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}"/>
+               </Trigger>
+            </ControlTemplate.Triggers>
+         </ControlTemplate>
+
+         <Style TargetType="TabItem" x:Key="VSTabStyle" BasedOn="{StaticResource {x:Type TabItem}}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="MinWidth" Value="15"/>
+            <Setter Property="Template">
+               <Setter.Value>
+                  <ControlTemplate TargetType="TabItem">
+                     <Grid Name="Panel">
+                        <Border Name="Border" Margin="0,5,0,0" Background="#2D2D30"
+                                BorderBrush="#333333" BorderThickness="1">
+                           <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              ContentSource="Header" Margin="10,2,10,2"
+                                              RecognizesAccessKey="True">
+                           </ContentPresenter>
+                        </Border>
+                     </Grid>
+                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True" >
+                           <Setter Property="Panel.ZIndex" Value="100"/>
+                           <Setter TargetName="Border" Property="Background" Value="#FF0070C7"/>
+                           <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                           <Setter TargetName="Border" Property="Background" Value="#2D2D30"/>
+                           <Setter TargetName="Border" Property="BorderBrush" Value="#333333"/>
+                        </Trigger>
+                        <MultiTrigger>
+                           <MultiTrigger.Conditions>
+                              <Condition Property="IsMouseOver" Value="True"/>
+                              <Condition Property="IsSelected" Value="False"/>
+                           </MultiTrigger.Conditions>
+                           <Setter TargetName="Border" Property="Background" Value="#404040"/>
+                           <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                        </MultiTrigger>
+                     </ControlTemplate.Triggers>
+                  </ControlTemplate>
+               </Setter.Value>
+            </Setter>
+         </Style>
+
+      </Grid.Resources>
+      
+      
+      
+      <Grid.ColumnDefinitions>
+         <ColumnDefinition Width="300"/>
+         <ColumnDefinition Width="*"/>
+         <ColumnDefinition Width="150"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="125"/>
+         <RowDefinition Height="*"/>
+         <RowDefinition Height="50"/>
+         <RowDefinition Height="20"/>
+      </Grid.RowDefinitions>
+
+      <Rectangle Fill="#1f1f1f" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
+      <Rectangle Fill="#383838" Grid.ColumnSpan="3" Grid.Row="3"/>
+
+      <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+         <Label x:Name="lblHeadline"
+                Margin="0"
+                HorizontalAlignment="Left"
+                Foreground="White"
+                FontSize="20">
+            Add Unreal C++ Class
+         </Label>
+         <Grid>
+            <Label x:Name="ClassNameHint"
+                   Foreground="LightGray"
+                   Padding="5"
+                   Margin="5,0,0,0"
+                   FontSize="16"
+                   VerticalAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Height="40"
+                   Width="250">
+               Enter Class Name
+            </Label>
+            <TextBox x:Name="ClassNameTextBox"
+                     TextChanged="ClassNameTextBox_TextChanged"
+                     Background="Transparent"
+                     Margin="5,0,0,0"
+                     Padding="5"
+                     VerticalContentAlignment="Center"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     FontSize="16"
+                     FontStyle="Normal"
+                     Foreground="LightGray"
+                     Height="40"
+                     Width="250" GotFocus="ClassNameTextBox_GotFocus" LostFocus="ClassNameTextBox_LostFocus"
+                     CaretBrush="LightGray"/>
+         </Grid>
+         <Grid Margin="0,5,0,0">
+            <Label x:Name="ApiNameHint"
+          Foreground="LightGray"
+          Padding="5"
+          Margin="5,0,0,0"
+          FontSize="16"
+          VerticalAlignment="Center"
+          VerticalContentAlignment="Center"
+          HorizontalAlignment="Left"
+          Height="40"
+          Width="250">
+               Enter API Name
+            </Label>
+            <TextBox x:Name="ApiNameTextBox"
+            TextChanged="ApiNameTextBox_TextChanged"
+            Background="Transparent"
+            Margin="5,0,0,0"
+            Padding="5"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            FontSize="16"
+            FontStyle="Normal"
+            Foreground="LightGray"
+            Height="40"
+            Width="250"
+            GotFocus="ApiNameTextBox_GotFocus"
+            LostFocus="ApiNameTextBox_LostFocus"
+            CaretBrush="LightGray"/>
+         </Grid>
+         <!--<TextBox x:Name="ClassNameTextBox"
+                  TextChanged="ClassNameTextBox_TextChanged"
+                  Margin="8"
+                  Height="40"
+                  MinWidth="250"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  FontSize="16"
+                  Foreground="LightGray" Text="">
+            <TextBox.Style>
+               <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                  <Style.Resources>
+                     <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                        <VisualBrush.Visual>
+                           <Label Content="Enter Class Name" Foreground="LightGray" FontSize="16"/>
+                        </VisualBrush.Visual>
+                     </VisualBrush>
+                  </Style.Resources>
+                  <Style.Triggers>
+                     <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                     </Trigger>
+                     <Trigger Property="Text" Value="{x:Null}">
+                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                     </Trigger>
+                     <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                     </Trigger>
+                  </Style.Triggers>
+               </Style>
+            </TextBox.Style>
+         </TextBox>-->
+      </StackPanel>
+
+      <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center">
+         <Grid>
+            <Grid.ColumnDefinitions>
+               <ColumnDefinition Width="65"/>
+               <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+               <RowDefinition Height="*"/>
+               <RowDefinition Height="5"/>
+               <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Header: " FontSize="16" Foreground="LightGray" Grid.Column="0" Grid.Row="0"/>
+            <Border Background="#333333" BorderThickness="2" BorderBrush="Black" Grid.Column="1" Grid.Row="0" Margin="0,0,5,0">
+               <TextBlock x:Name="HeaderPathTextBlock" Text=".../.h" Margin="2" Foreground="#FFFFBB00" TextWrapping="WrapWithOverflow" FontFamily="Cascadia Mono" FontSize="13" VerticalAlignment="Center"/>
+            </Border>
+            <Label Content="Source: " FontSize="16" Foreground="LightGray" Grid.Column="0" Grid.Row="2"/>
+            <Border Background="#333333" BorderThickness="2" BorderBrush="Black" Grid.Column="1" Grid.Row="2" Margin="0,0,5,0">
+               <TextBlock x:Name="CppPathTextBlock" Text=".../.cpp" Margin="2" Foreground="#FFFFBB00" TextWrapping="WrapWithOverflow" FontFamily="Cascadia Mono" FontSize="13" VerticalAlignment="Center"/>
+            </Border>
+         </Grid>
+      </StackPanel>
+
+      <StackPanel Orientation="Vertical" Grid.Row="1">
+         <Separator Height="20" Margin="5,0,5,0"/>
+         <Label Content="Parent Class" Foreground="LightGray" FontSize="14"/>
+         <StackPanel x:Name="ParentClassButtonsRow1"  Orientation="Horizontal" Margin="10, 0">
+            <RadioButton x:Name="ActorRadioButton" GroupName="ParentClass" Padding="2" Content="Actor" Style="{StaticResource {x:Type ToggleButton}}" Template="{DynamicResource ToggleButtonLeft}" Checked="ActorRadioButton_Checked" IsChecked="True"/>
+            <RadioButton x:Name="ComponentRadioButton" GroupName="ParentClass" Padding="2" Content="Component" Style="{StaticResource {x:Type ToggleButton}}" Template="{DynamicResource ToggleButtonMid}" Checked="ComponentRadioButton_Checked"/>
+            <RadioButton x:Name="ObjectRadioButton" GroupName="ParentClass" Padding="2" Content="Object" Style="{StaticResource {x:Type ToggleButton}}" Template="{DynamicResource ToggleButtonMid}" Checked="ObjectRadioButton_Checked"/>
+            <RadioButton x:Name="InterfaceRadioButton" GroupName="ParentClass" Padding="2" Content="Interface" Style="{StaticResource {x:Type ToggleButton}}" Template="{DynamicResource ToggleButtonMid}" Checked="InterfaceRadioButton_Checked"/>
+            <RadioButton x:Name="ModuleRadioButton" GroupName="ParentClass" Padding="2" Content="Module" Style="{StaticResource {x:Type ToggleButton}}" Template="{DynamicResource ToggleButtonRight}" Checked="ModuleRadioButton_Checked"/>
+         </StackPanel>
+         <StackPanel x:Name="ParentClassButtonsRow2" Orientation="Horizontal" Margin="10, 0">
+            <RadioButton x:Name="WorldSubsystemRadioButton" GroupName="ParentClass" Padding="4,2,2,4" Content="WorldSubsystem" Style="{StaticResource {x:Type ToggleButton}}" Template="{DynamicResource ToggleButtonLeft}" Checked="WorldSubsystemRadioButton_Checked"/>
+            <RadioButton x:Name="GameInstanceSubsystemRadioButton" GroupName="ParentClass" Padding="4,2,4,2" Content="GameInstanceSubsystem" Style="{StaticResource {x:Type ToggleButton}}" Template="{DynamicResource ToggleButtonRight}" Checked="GameInstanceSubsystemRadioButton_Checked"/>
+         </StackPanel>
+         <!--<TextBlock x:Name="HeaderTextBlock" Text="Header: " Margin="5" Foreground="White" TextWrapping="WrapWithOverflow"/>
+         <TextBlock x:Name="CppTextBlock" Text="Cpp: " Margin="5" Foreground="White" TextWrapping="WrapWithOverflow"/>-->
+
+         <Separator Height="20" Margin="5,0,5,0"/>
+         <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Center">
+            <CheckBox x:Name="CreateParentFolderCheckbox"
+   Click="CreateParentFolderCheckbox_Click"
+   Margin="10,0,0,0"
+   Foreground="LightGray"
+   Width="22"
+   Height="22"
+   HorizontalAlignment="Left"
+   VerticalAlignment="Center" IsChecked="False">
+               <CheckBox.Style>
+                  <Style TargetType="CheckBox">
+                     <Setter Property="Cursor" Value="Hand"></Setter>
+                     <Setter Property="Content" Value=""></Setter>
+                     <Setter Property="Template">
+                        <Setter.Value>
+                           <ControlTemplate TargetType="{x:Type CheckBox}">
+                              <Grid>
+                                 <Ellipse x:Name="E_Filling" Margin="1.5" StrokeThickness="1.5" Stroke="#0A0C0D">
+                                    <Ellipse.Fill>
+                                       <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                          <GradientStop Offset="0" Color="#FF474E51"/>
+                                          <GradientStop Offset="0.2" Color="#FF474E51"/>
+                                          <GradientStop Offset="1" Color="#FF737A7D"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Outline" Stroke="#6A6E71" StrokeThickness="1.5"/>
+                                 <Ellipse x:Name="E_Bloom" Margin="2.5" Opacity="1" StrokeThickness="1" Stroke="#FF7DFF00" Visibility="Hidden">
+                                    <Ellipse.Effect>
+                                       <BlurEffect Radius="3"></BlurEffect>
+                                    </Ellipse.Effect>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Flare" Margin="3.5" StrokeThickness="0.7">
+                                    <Ellipse.OpacityMask>
+                                       <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                          <GradientStop Color="#00000000" Offset="0.402"/>
+                                          <GradientStop Color="White" Offset="0"/>
+                                          <GradientStop Color="#A9A9A9A9" Offset="0.076"/>
+                                          <GradientStop Color="#35353535" Offset="0.275"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.OpacityMask>
+                                    <Ellipse.Stroke>
+                                       <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                          <GradientStop Color="#EE858C8F" Offset="0"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.4"/>
+                                          <GradientStop Color="#858C8F" Offset="0.5"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.6"/>
+                                          <GradientStop Color="#EE858C8F" Offset="1"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Stroke>
+                                 </Ellipse>
+                                 <Ellipse Margin="8" x:Name="E_MinMargin" />
+                                 <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                              </Grid>
+                              <ControlTemplate.Triggers>
+                                 <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="E_Filling" Property="Fill">
+                                       <Setter.Value>
+                                          <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                             <GradientStop Offset="0" Color="#FF53E847"/>
+                                             <GradientStop Offset="0.2" Color="#FF53E847"/>
+                                             <GradientStop Offset="1" Color="#FFFDEACA"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Flare" Property="Stroke">
+                                       <Setter.Value>
+                                          <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                             <GradientStop Color="#EE8DF06A" Offset="0"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.4"/>
+                                             <GradientStop Color="#FEFCDD" Offset="0.5"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.6"/>
+                                             <GradientStop Color="#EE8DF06A" Offset="1"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Bloom" Property="Visibility" Value="Visible"/>
+                                 </Trigger>
+                                 <Trigger Property="IsChecked" Value="False">
+
+                                 </Trigger>
+                              </ControlTemplate.Triggers>
+                           </ControlTemplate>
+                        </Setter.Value>
+                     </Setter>
+                  </Style>
+               </CheckBox.Style>
+            </CheckBox>
+            <Label
+Margin="0"
+HorizontalAlignment="Left"
+VerticalAlignment="Center"
+Foreground="LightGray"
+FontSize="16">
+               Create Parent Folder
+            </Label>
+         </StackPanel>
+         <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Center">
+            <CheckBox x:Name="CreateEmptyFilesCheckbox"
+          Click="CreateEmptyFilesCheckbox_Click"
+          Margin="10,0,0,0"
+          Foreground="LightGray"
+          Width="22"
+          Height="22"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Center" IsChecked="False">
+               <CheckBox.Style>
+                  <Style TargetType="CheckBox">
+                     <Setter Property="Cursor" Value="Hand"></Setter>
+                     <Setter Property="Content" Value=""></Setter>
+                     <Setter Property="Template">
+                        <Setter.Value>
+                           <ControlTemplate TargetType="{x:Type CheckBox}">
+                              <Grid>
+                                 <Ellipse x:Name="E_Filling" Margin="1.5" StrokeThickness="1.5" Stroke="#0A0C0D">
+                                    <Ellipse.Fill>
+                                       <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                          <GradientStop Offset="0" Color="#FF474E51"/>
+                                          <GradientStop Offset="0.2" Color="#FF474E51"/>
+                                          <GradientStop Offset="1" Color="#FF737A7D"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Outline" Stroke="#6A6E71" StrokeThickness="1.5"/>
+                                 <Ellipse x:Name="E_Bloom" Margin="2.5" Opacity="1" StrokeThickness="1" Stroke="#FF7DFF00" Visibility="Hidden">
+                                    <Ellipse.Effect>
+                                       <BlurEffect Radius="3"></BlurEffect>
+                                    </Ellipse.Effect>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Flare" Margin="3.5" StrokeThickness="0.7">
+                                    <Ellipse.OpacityMask>
+                                       <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                          <GradientStop Color="#00000000" Offset="0.402"/>
+                                          <GradientStop Color="White" Offset="0"/>
+                                          <GradientStop Color="#A9A9A9A9" Offset="0.076"/>
+                                          <GradientStop Color="#35353535" Offset="0.275"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.OpacityMask>
+                                    <Ellipse.Stroke>
+                                       <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                          <GradientStop Color="#EE858C8F" Offset="0"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.4"/>
+                                          <GradientStop Color="#858C8F" Offset="0.5"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.6"/>
+                                          <GradientStop Color="#EE858C8F" Offset="1"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Stroke>
+                                 </Ellipse>
+                                 <Ellipse Margin="8" x:Name="E_MinMargin" />
+                                 <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                              </Grid>
+                              <ControlTemplate.Triggers>
+                                 <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="E_Filling" Property="Fill">
+                                       <Setter.Value>
+                                          <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                             <GradientStop Offset="0" Color="#FF53E847"/>
+                                             <GradientStop Offset="0.2" Color="#FF53E847"/>
+                                             <GradientStop Offset="1" Color="#FFFDEACA"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Flare" Property="Stroke">
+                                       <Setter.Value>
+                                          <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                             <GradientStop Color="#EE8DF06A" Offset="0"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.4"/>
+                                             <GradientStop Color="#FEFCDD" Offset="0.5"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.6"/>
+                                             <GradientStop Color="#EE8DF06A" Offset="1"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Bloom" Property="Visibility" Value="Visible"/>
+                                 </Trigger>
+                                 <Trigger Property="IsChecked" Value="False">
+
+                                 </Trigger>
+                              </ControlTemplate.Triggers>
+                           </ControlTemplate>
+                        </Setter.Value>
+                     </Setter>
+                  </Style>
+               </CheckBox.Style>
+            </CheckBox>
+            <Label
+       Margin="0"
+       HorizontalAlignment="Left"
+       VerticalAlignment="Center"
+       Foreground="LightGray"
+       FontSize="16">
+               Create Empty Files
+            </Label>
+         </StackPanel>
+         <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Center">
+            <CheckBox x:Name="CreateSubfoldersCheckbox"
+                   Click="CreateSubfoldersCheckbox_Click"
+                   Margin="10,0,0,0"
+                   Foreground="LightGray"
+                   Width="22"
+                   Height="22"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center" IsChecked="True">
+               <CheckBox.Style>
+                  <Style TargetType="CheckBox">
+                     <Setter Property="Cursor" Value="Hand"></Setter>
+                     <Setter Property="Content" Value=""></Setter>
+                     <Setter Property="Template">
+                        <Setter.Value>
+                           <ControlTemplate TargetType="{x:Type CheckBox}">
+                              <Grid>
+                                 <Ellipse x:Name="E_Filling" Margin="1.5" StrokeThickness="1.5" Stroke="#0A0C0D">
+                                    <Ellipse.Fill>
+                                       <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                          <GradientStop Offset="0" Color="#FF474E51"/>
+                                          <GradientStop Offset="0.2" Color="#FF474E51"/>
+                                          <GradientStop Offset="1" Color="#FF737A7D"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Outline" Stroke="#6A6E71" StrokeThickness="1.5"/>
+                                 <Ellipse x:Name="E_Bloom" Margin="2.5" Opacity="1" StrokeThickness="1" Stroke="#FF7DFF00" Visibility="Hidden">
+                                    <Ellipse.Effect>
+                                       <BlurEffect Radius="3"></BlurEffect>
+                                    </Ellipse.Effect>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Flare" Margin="3.5" StrokeThickness="0.7">
+                                    <Ellipse.OpacityMask>
+                                       <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                          <GradientStop Color="#00000000" Offset="0.402"/>
+                                          <GradientStop Color="White" Offset="0"/>
+                                          <GradientStop Color="#A9A9A9A9" Offset="0.076"/>
+                                          <GradientStop Color="#35353535" Offset="0.275"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.OpacityMask>
+                                    <Ellipse.Stroke>
+                                       <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                          <GradientStop Color="#EE858C8F" Offset="0"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.4"/>
+                                          <GradientStop Color="#858C8F" Offset="0.5"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.6"/>
+                                          <GradientStop Color="#EE858C8F" Offset="1"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Stroke>
+                                 </Ellipse>
+                                 <Ellipse Margin="8" x:Name="E_MinMargin" />
+                                 <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                              </Grid>
+                              <ControlTemplate.Triggers>
+                                 <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="E_Filling" Property="Fill">
+                                       <Setter.Value>
+                                          <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                             <GradientStop Offset="0" Color="#FF53E847"/>
+                                             <GradientStop Offset="0.2" Color="#FF53E847"/>
+                                             <GradientStop Offset="1" Color="#FFFDEACA"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Flare" Property="Stroke">
+                                       <Setter.Value>
+                                          <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                             <GradientStop Color="#EE8DF06A" Offset="0"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.4"/>
+                                             <GradientStop Color="#FEFCDD" Offset="0.5"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.6"/>
+                                             <GradientStop Color="#EE8DF06A" Offset="1"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Bloom" Property="Visibility" Value="Visible"/>
+                                 </Trigger>
+                                 <Trigger Property="IsChecked" Value="False">
+
+                                 </Trigger>
+                              </ControlTemplate.Triggers>
+                           </ControlTemplate>
+                        </Setter.Value>
+                     </Setter>
+                  </Style>
+               </CheckBox.Style>
+            </CheckBox>
+            <Label
+                Margin="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="LightGray"
+                FontSize="16">
+               Create Public / Private Folders
+            </Label>
+         </StackPanel>
+         <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Center">
+            <CheckBox x:Name="RegenerateProjectFilesCheckbox"
+                Click="RegenerateProjectFilesCheckbox_Click"
+                Margin="10,0,0,0"
+                Foreground="LightGray"
+                Width="22"
+                Height="22"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center" IsChecked="True">
+               <CheckBox.Style>
+                  <Style TargetType="CheckBox">
+                     <Setter Property="Cursor" Value="Hand"></Setter>
+                     <Setter Property="Content" Value=""></Setter>
+                     <Setter Property="Template">
+                        <Setter.Value>
+                           <ControlTemplate TargetType="{x:Type CheckBox}">
+                              <Grid>
+                                 <Ellipse x:Name="E_Filling" Margin="1.5" StrokeThickness="1.5" Stroke="#0A0C0D">
+                                    <Ellipse.Fill>
+                                       <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                          <GradientStop Offset="0" Color="#FF474E51"/>
+                                          <GradientStop Offset="0.2" Color="#FF474E51"/>
+                                          <GradientStop Offset="1" Color="#FF737A7D"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Fill>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Outline" Stroke="#6A6E71" StrokeThickness="1.5"/>
+                                 <Ellipse x:Name="E_Bloom" Margin="2.5" Opacity="1" StrokeThickness="1" Stroke="#FF7DFF00" Visibility="Hidden">
+                                    <Ellipse.Effect>
+                                       <BlurEffect Radius="3"></BlurEffect>
+                                    </Ellipse.Effect>
+                                 </Ellipse>
+                                 <Ellipse x:Name="E_Flare" Margin="3.5" StrokeThickness="0.7">
+                                    <Ellipse.OpacityMask>
+                                       <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                          <GradientStop Color="#00000000" Offset="0.402"/>
+                                          <GradientStop Color="White" Offset="0"/>
+                                          <GradientStop Color="#A9A9A9A9" Offset="0.076"/>
+                                          <GradientStop Color="#35353535" Offset="0.275"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.OpacityMask>
+                                    <Ellipse.Stroke>
+                                       <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                          <GradientStop Color="#EE858C8F" Offset="0"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.4"/>
+                                          <GradientStop Color="#858C8F" Offset="0.5"/>
+                                          <GradientStop Color="#EE858C8F" Offset="0.6"/>
+                                          <GradientStop Color="#EE858C8F" Offset="1"/>
+                                       </LinearGradientBrush>
+                                    </Ellipse.Stroke>
+                                 </Ellipse>
+                                 <Ellipse Margin="9" x:Name="E_MinMargin" />
+                                 <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                              </Grid>
+                              <ControlTemplate.Triggers>
+                                 <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="E_Filling" Property="Fill">
+                                       <Setter.Value>
+                                          <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                             <GradientStop Offset="0" Color="#FF53E847"/>
+                                             <GradientStop Offset="0.2" Color="#FF53E847"/>
+                                             <GradientStop Offset="1" Color="#FFFDEACA"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Flare" Property="Stroke">
+                                       <Setter.Value>
+                                          <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                             <GradientStop Color="#EE8DF06A" Offset="0"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.4"/>
+                                             <GradientStop Color="#FEFCDD" Offset="0.5"/>
+                                             <GradientStop Color="#EEFEFCDD" Offset="0.6"/>
+                                             <GradientStop Color="#EE8DF06A" Offset="1"/>
+                                          </LinearGradientBrush>
+                                       </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="E_Bloom" Property="Visibility" Value="Visible"/>
+                                 </Trigger>
+                                 <Trigger Property="IsChecked" Value="False">
+
+                                 </Trigger>
+                              </ControlTemplate.Triggers>
+                           </ControlTemplate>
+                        </Setter.Value>
+                     </Setter>
+                  </Style>
+               </CheckBox.Style>
+            </CheckBox>
+            <Label
+                Margin="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="LightGray"
+                FontSize="16">
+               Regenerate Project Files
+            </Label>
+         </StackPanel>
+      </StackPanel>
+
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right">
+         <Button Content="Save"
+          Click="SaveButton_Click"
+          Width="60"
+          Height="20"
+          x:Name="SaveButton" HorizontalAlignment="Center" Margin="15" VerticalAlignment="Center"/>
+         <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Center" Margin="0 0 15 0" VerticalAlignment="Center" Height="20" Width="60" Click="CancelButton_Click"/>
+      </StackPanel>
+
+      <!--<RichTextBox Grid.Column="1" Grid.Row="1" Margin="5" Background="#1f1f1f" Foreground="White" FontFamily="Cascadia Mono">
+         <FlowDocument>
+            <Paragraph x:Name="PreviewParagraph"/>
+         </FlowDocument>
+      </RichTextBox>-->
+
+      <TabControl x:Name="TabbedPreview" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                  ItemContainerStyle="{StaticResource VSTabStyle}">
+      </TabControl>
+   </Grid>
+</UserControl>

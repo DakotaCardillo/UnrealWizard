@@ -1,0 +1,16 @@
+﻿#include "${CLASS_NAME}.h"
+#include "Modules/ModuleManager.h"
+
+#include "Log.h"
+
+void F${CLASS_NAME}::StartupModule()
+{
+	UE_LOG(Log${CLASS_NAME}, Log, TEXT("${CLASS_NAME} module starting up"));
+}
+
+void F${CLASS_NAME}::ShutdownModule()
+{
+	UE_LOG(Log${CLASS_NAME}, Log, TEXT("${CLASS_NAME} module shutting down"));
+}
+
+IMPLEMENT_GAME_MODULE(F${CLASS_NAME}, ${CLASS_NAME});
