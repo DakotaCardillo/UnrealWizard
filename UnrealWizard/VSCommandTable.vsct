@@ -12,6 +12,7 @@
       <Bitmap guid="AddFolder" href="Resources\Icons\AddFolder.png" usedList="AddFolderIcon"/>
       <Bitmap guid="AddMethod" href="Resources\Icons\AddMethod.png" usedList="AddMethodIcon"/>
       <Bitmap guid="AddToSolutionExplorer" href="Resources\Icons\AddToSolutionExplorer.png" usedList="AddToSolutionExplorerIcon"/>
+      <Bitmap guid="SolutionFolderSwitch" href="Resources\Icons\SolutionFolderSwitch.png" usedList="SolutionFolderSwitchIcon"/>
     </Bitmaps>
     <Groups>
       <Group guid="UnrealWizard" id="UnrealWizardGroup" priority="0x0600">
@@ -39,7 +40,14 @@
         <Parent guid="UnrealWizard" id="UnrealWizardGroup"/>
         <Icon guid="AddToSolutionExplorer" id="AddToSolutionExplorerIcon" />
         <Strings>
-          <ButtonText>Create synced filter</ButtonText>
+          <ButtonText>Create Synced Filter</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="UnrealWizard" id="ShowInFileExplorer" priority="0x0001" type="Button">
+        <Parent guid="UnrealWizard" id="UnrealWizardGroup"/>
+        <Icon guid="SolutionFolderSwitch" id="SolutionFolderSwitchIcon" />
+        <Strings>
+          <ButtonText>Show In File Explorer</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -50,6 +58,7 @@
       <IDSymbol name="UnrealWizardGroup" value="0x0001"/>
       <IDSymbol name="UEClassWindow" value="0x0100"/>
       <IDSymbol name="CreateSyncedFilter" value="0x0010"/>
+      <IDSymbol name="ShowInFileExplorer" value="0x1000"/>
       <!-- Package GUID -->
     </GuidSymbol>
     <GuidSymbol name="AbstractCube" value="{34D43ECA-C84F-4EE2-9398-A842A94A1EA6}">
@@ -63,6 +72,9 @@
     </GuidSymbol>
     <GuidSymbol name="AddToSolutionExplorer" value="{F4635519-3B76-48D8-AA3B-4F83DCB189B2}">
       <IDSymbol name="AddToSolutionExplorerIcon" value="1"/>
+    </GuidSymbol>
+    <GuidSymbol name="SolutionFolderSwitch" value="{54CEAA0C-E36F-444E-B7FD-185EB7710EE1}">
+      <IDSymbol name="SolutionFolderSwitchIcon" value="1"/>
     </GuidSymbol>
     <!--<GuidSymbol name="guidUnrealWizardCmdSet" value="{252cf685-cded-4bd7-8d49-5fd125157a3b}">
       --><!-- Command set GUID --><!--

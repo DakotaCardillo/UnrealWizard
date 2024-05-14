@@ -18,6 +18,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
+using EnvDTE80;
 
 namespace UnrealWizard
 {
@@ -327,9 +328,9 @@ namespace UnrealWizard
          {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-            string projectPath = SelectedFilter.ContainingProject.FullName;
+            string solutionDir = Path.GetDirectoryName(VisualStudioServices.DTE.Solution.FullName);
 
-            string[] files = Directory.GetFiles(Directory.GetParent(projectPath).FullName);
+            string[] files = Directory.GetFiles(solutionDir);
 
             bool executedScript = false;
 
@@ -353,11 +354,11 @@ namespace UnrealWizard
             if (!executedScript)
             {
                VsShellUtilities.ShowMessageBox(
-                 VisualStudioServices.ServiceProvider,
-                 "Failed to regenerate project files. Please do this manually.",
-                 "UnrealWizard - Error",
-                 OLEMSGICON.OLEMSGICON_CRITICAL,
-                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                  VisualStudioServices.ServiceProvider,
+                  "Failed to regenerate project files. Please do this manually.",
+                  "UnrealWizard - Error",
+                  OLEMSGICON.OLEMSGICON_CRITICAL,
+                  OLEMSGBUTTON.OLEMSGBUTTON_OK,
                   OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
             }
          });

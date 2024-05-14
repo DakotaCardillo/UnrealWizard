@@ -12,7 +12,7 @@ namespace UnrealWizard
    {
       private DTE2 dte;
 
-      private string fullFilterPath;
+      private string parentFilterFullPath;
 
       protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
       {
@@ -21,9 +21,12 @@ namespace UnrealWizard
             if (dte == null)
             {
                dte = await Package.GetServiceAsync(typeof(DTE)) as DTE2;
+               VisualStudioServices.DTE = dte;
             }
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            string solutionDir = Path.GetDirectoryName(dte.Solution.FullName);
 
             // Find the selected filter and get it's full path on disk (this will be the parent for the new filter)
             ProjectItem parentFilterProjectItem = null;
@@ -35,8 +38,10 @@ namespace UnrealWizard
                if (item.ProjectItem != null && item.ProjectItem.Kind == EnvDTE.Constants.vsProjectItemKindVirtualFolder)
                {
                   parentFilterProjectItem = item.ProjectItem;
-                  string projectPath = parentFilterProjectItem.ContainingProject.FullName;
-                  fullFilterPath = Directory.GetParent(projectPath).FullName + "\\" + Utility.GetFilterPath(parentFilterProjectItem);
+                  string parentFilterRelativePath = Utility.GetFilterPath(parentFilterProjectItem);
+                  string projectName = parentFilterProjectItem.ContainingProject.Name;
+
+                  parentFilterFullPath = Path.Combine(solutionDir, projectName, parentFilterRelativePath);
                }
             }
 
@@ -60,18 +65,18 @@ namespace UnrealWizard
       {
          ThreadHelper.ThrowIfNotOnUIThread();
 
-         if (fullFilterPath.Length > 0)
+         if (parentFilterFullPath.Length > 0)
          {
             // Create the new directory to match the renamed filter
             string newName = ProjectItem.Name;
-            string directoryPath = Path.Combine(fullFilterPath, newName);
+            string directoryPath = Path.Combine(parentFilterFullPath, newName);
 
             Directory.CreateDirectory(directoryPath);
 
             System.Diagnostics.Debug.WriteLine($"Item renamed from {OldName} to {newName}");
          }
 
-         fullFilterPath = "";
+         parentFilterFullPath = "";
 
          // Unsubscribe from future rename events
          var events = (Events2)dte.Events;

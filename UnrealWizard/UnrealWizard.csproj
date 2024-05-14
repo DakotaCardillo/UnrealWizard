@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\CreateSyncedFilterCommand.cs" />
+    <Compile Include="Commands\ShowInFileExplorerCommand.cs" />
     <Compile Include="Commands\UEClassWindowCommand.cs" />
     <Compile Include="ParentClassEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +82,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Resources\Icons\FolderBrowserDialogControl.png" />
+    <Content Include="Resources\Icons\OpenFileDialog.png" />
+    <Content Include="Resources\Icons\SearchFolderClosed.png" />
+    <Content Include="Resources\Icons\SolutionFolderSwitch.png" />
+    <Content Include="Resources\Icons\Sync.png" />
     <Content Include="Resources\Icons\Unreal_Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

@@ -23,6 +23,7 @@ namespace UnrealWizard
          if (dte == null)
          {
             dte = await Package.GetServiceAsync(typeof(DTE)) as DTE2;
+            VisualStudioServices.DTE = dte;
          }
 
          await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
@@ -31,6 +32,8 @@ namespace UnrealWizard
          string filterFullPath = "";
          string filterRelativePath = "";
          ProjectItem selectedfilter = null;
+
+         string solutionDir = Path.GetDirectoryName(dte.Solution.FullName);
 
          // Get the name of the selected filter, it's path relative to the project, and it's full path on disk
          SelectedItems selectedItems = dte.SelectedItems;
@@ -45,8 +48,8 @@ namespace UnrealWizard
                filterName = selectedfilter.Name;
                filterRelativePath = Utility.GetFilterPath(selectedfilter);
 
-               string projectPath = selectedfilter.ContainingProject.FullName;
-               filterFullPath = Directory.GetParent(projectPath).FullName + "\\" + filterRelativePath;
+               string projectName = selectedfilter.ContainingProject.Name;
+               filterFullPath = Path.Combine(solutionDir, projectName, filterRelativePath);
             }
          }
 

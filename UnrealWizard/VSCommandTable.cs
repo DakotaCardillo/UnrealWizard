@@ -26,6 +26,9 @@ namespace UnrealWizard
 
         public const string AddToSolutionExplorerString = "f4635519-3b76-48d8-aa3b-4f83dcb189b2";
         public static Guid AddToSolutionExplorer = new Guid(AddToSolutionExplorerString);
+
+        public const string SolutionFolderSwitchString = "54ceaa0c-e36f-444e-b7fd-185eb7710ee1";
+        public static Guid SolutionFolderSwitch = new Guid(SolutionFolderSwitchString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -35,9 +38,11 @@ namespace UnrealWizard
         public const int UnrealWizardGroup = 0x0001;
         public const int UEClassWindow = 0x0100;
         public const int CreateSyncedFilter = 0x0010;
+        public const int ShowInFileExplorer = 0x1000;
         public const int AbstractCubeIcon = 0x0001;
         public const int AddFolderIcon = 0x0001;
         public const int AddMethodIcon = 0x0001;
         public const int AddToSolutionExplorerIcon = 0x0001;
+        public const int SolutionFolderSwitchIcon = 0x0001;
     }
 }
