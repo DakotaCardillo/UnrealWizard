@@ -11,7 +11,7 @@ namespace UnrealWizard
         public const string Name = "UnrealWizard";
         public const string Description = @"Adds context menu options to filters inside of Unreal Engine C++ projects for easily adding directories and classes";
         public const string Language = "en-US";
-        public const string Version = "1.0";
+        public const string Version = "1.2.0";
         public const string Author = "Dakota Cardillo";
         public const string Tags = "";
     }

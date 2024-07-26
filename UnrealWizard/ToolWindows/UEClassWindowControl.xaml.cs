@@ -142,6 +142,10 @@ namespace UnrealWizard
       {
          if (Directory.Exists(FilterFullPath))
          {
+            if (ShouldCreateSubfolders)
+            {
+
+            }
             Directory.CreateDirectory(Path.GetDirectoryName(HeaderFileFullPath));
             File.WriteAllText(HeaderFileFullPath, HeaderContent);
 
@@ -294,11 +298,32 @@ namespace UnrealWizard
 
             ProjectItem parentItem = ShouldCreateParentFolder ? ParentFilter : SelectedFilter;
 
-            // Create the new filter under the selected parent filter
-            PublicFilter = parentItem.ProjectItems.AddFolder("Public", EnvDTE.Constants.vsProjectItemKindVirtualFolder);
-            if (ShouldCreateCppFile)
+            PublicFilter = FindChildFilter(parentItem, "Public");
+            PrivateFilter = FindChildFilter(parentItem, "Private");
+
+            // Create the new filter(s) under the selected parent filter, if they don't exist
+            if (PublicFilter == null)
+            {
+               PublicFilter = parentItem.ProjectItems.AddFolder("Public", EnvDTE.Constants.vsProjectItemKindVirtualFolder);
+            }
+            if (ShouldCreateCppFile && PrivateFilter == null)
+            {
                PrivateFilter = parentItem.ProjectItems.AddFolder("Private", EnvDTE.Constants.vsProjectItemKindVirtualFolder);
+            }
          });
+      }
+
+      private ProjectItem FindChildFilter(ProjectItem projectItem, string childFilterName)
+      {
+         foreach (ProjectItem childItem in projectItem.ProjectItems)
+         {
+            if (childItem.Name.Equals(childFilterName, StringComparison.OrdinalIgnoreCase))
+            {
+               return childItem;
+            }
+         }
+
+         return null;
       }
 
       private void AddFilesToFilters()

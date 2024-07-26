@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="UnrealWizard.9096c466-c543-48d9-bd48-7766aedbe318" Version="1.0" Language="en-US" Publisher="Dakota Cardillo" />
+        <Identity Id="UnrealWizard.9096c466-c543-48d9-bd48-7766aedbe318" Version="1.2.0" Language="en-US" Publisher="Dakota Cardillo" />
         <DisplayName>UnrealWizard</DisplayName>
         <Description xml:space="preserve">Adds context menu options to filters inside of Unreal Engine C++ projects for easily adding directories and classes</Description>
         <Icon>Resources\Icons\BlackMage.png</Icon>
